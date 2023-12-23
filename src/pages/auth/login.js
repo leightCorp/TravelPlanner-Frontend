@@ -1,5 +1,73 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../../store/auth-context";
+import { useNavigate } from "react-router";
+import { Button, Card, Form } from "react-bootstrap";
+import AuthNav from "../../components/auth/AuthNav";
+import { HOTEL } from "../../constants/role-constants";
+
 function Login() {
-  return <>Login</>;
+  const [error, setError] = useState("");
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  async function handleSingUp(e) {
+    e.preventDefault();
+
+    const creds = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    const res = await context.loginUser(creds);
+    if (res === "success") {
+      const role = JSON.parse(localStorage.getItem("authData")).role;
+      if (role === HOTEL) {
+        navigate("/hotel");
+      } else {
+        navigate("/user");
+      }
+    } else {
+      setError(res);
+    }
+  }
+
+  return (
+    <>
+      <AuthNav isLogin={true} />
+      <div className="d-flex justify-content-center align-items-center w-100 h-100 bg-black ">
+        <Card className=" bg-black border border-primary w-25">
+          <Card.Body className="d-flex justify-content-center align-items-center">
+            <Form
+              className="d-flex flex-column  justify-content-center align-items-center w-75"
+              onSubmit={handleSingUp}
+            >
+              <Form.Control
+                type="email"
+                className=" my-3 "
+                placeholder="enter email"
+                name="email"
+              />
+
+              <input
+                type="password"
+                className="form-control  my-3"
+                placeholder="enter password"
+                name="password"
+              ></input>
+
+              <Button type="submit" variant="primary">
+                LOGIN
+              </Button>
+            </Form>
+          </Card.Body>
+          {error && (
+            <Card.Footer className=" d-flex  justify-content-center ">
+              <span className="text-danger">{error}</span>
+            </Card.Footer>
+          )}
+        </Card>
+      </div>
+    </>
+  );
 }
 
 export default Login;
