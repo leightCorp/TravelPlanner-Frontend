@@ -1,5 +1,13 @@
+import { Outlet } from "react-router";
+import HotelNavBar from "../../components/hotel/HotelNavBar";
+
 function HotelLayout() {
-  return <>Layout</>;
+  return (
+    <>
+      <HotelNavBar />
+      <Outlet />
+    </>
+  );
 }
 
 export default HotelLayout;

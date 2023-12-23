@@ -1,3 +1,5 @@
+import HotelNavBar from "../../components/hotel/HotelNavBar";
+
 function HotelHome() {
   return <>Home</>;
 }

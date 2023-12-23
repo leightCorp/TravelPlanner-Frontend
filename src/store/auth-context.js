@@ -64,7 +64,11 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = (creds) => {};
+  const logoutUser = () => {
+    localStorage.removeItem("authData");
+    setAuthData("");
+    return "success";
+  };
 
   const context = {
     authData: authData,
