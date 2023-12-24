@@ -1,7 +1,25 @@
+import { Button } from "react-bootstrap";
 import HotelNavBar from "../../components/hotel/HotelNavBar";
+import { useContext, useEffect, useState } from "react";
+import HomeModal from "./hotel-modal";
+import { HotelContext } from "../../store/hotel-context";
 
 function HotelHome() {
-  return <>Home</>;
+  const [modalShow, setModalShow] = useState(false);
+  const context = useContext(HotelContext);
+
+  useEffect(() => {
+    const email = JSON.parse(localStorage.getItem("authData")).email;
+    const res = context.getHotelDetails(email);
+    if (res === "undefined") {
+      setModalShow(true);
+    }
+  }, []);
+  return (
+    <>
+      <HomeModal show={modalShow} onHide={() => setModalShow(false)} />
+    </>
+  );
 }
 
 export default HotelHome;
