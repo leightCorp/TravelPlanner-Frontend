@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { ModalContext } from "../../store/modalHotel-context";
+import { HotelContext } from "../../store/hotel-context";
 
 function HomeModal(props) {
   const nameRef = useRef();
@@ -9,8 +9,8 @@ function HomeModal(props) {
   const addressRef = useRef();
   const contactRef = useRef();
 
-  const context = useContext(ModalContext);
   const [response, setResponse] = useState();
+  const context = useContext(HotelContext);
 
   async function handleSubmitt() {
     const hotel = {

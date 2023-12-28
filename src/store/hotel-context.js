@@ -1,10 +1,15 @@
 import { createContext, useState } from "react";
-import { BASE_URL } from "../constants/env.constants";
+import {
+  BASE_URL,
+  GET_HOTEL_DETAILS,
+  REGISTER_HOTEL,
+} from "../constants/env.constants";
 import { COMMON_ERROR, NO_HOTELS } from "../constants/error-constants";
 
 export const HotelContext = createContext({
   hotelDetails: {},
   getHotelDetails: (body) => {},
+  registerHotel: () => {},
 });
 export function HotelContextProvider(props) {
   const [hotelDetails, setHotelDetails] = useState({});
@@ -20,16 +25,38 @@ export function HotelContextProvider(props) {
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch(`${BASE_URL}/api/v1/hotel/${email}`, options);
+    const res = await fetch(GET_HOTEL_DETAILS + email, options);
     console.log(res);
     if (res.status === 404) {
       return "failed";
     }
   }
 
+  async function registerHotel(hotel) {
+    const accessToken = JSON.parse(
+      localStorage.getItem("authData")
+    ).accessToken;
+    console.log(hotel);
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(hotel),
+    };
+    const res = await fetch(REGISTER_HOTEL, options);
+    console.log(res);
+    if (res.status === 200) {
+      return "success";
+    }
+  }
+
   const hotelData = {
     hotelDetails: hotelDetails,
     getHotelDetails: getHotelDetails,
+    registerHotel: registerHotel,
   };
   return (
     <HotelContext.Provider value={hotelData}>

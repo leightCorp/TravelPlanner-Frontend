@@ -1,4 +1,8 @@
-import { BASE_URL } from "../constants/env.constants";
+import {
+  BASE_URL,
+  LOGIN_USER,
+  REGISTER_USER,
+} from "../constants/env.constants";
 import {
   BAD_CREDENTIALS,
   COMMON_ERROR,
@@ -24,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
       body: JSON.stringify(creds),
     };
 
-    const res = await fetch(`${BASE_URL}/api/v1/auth/register`, options);
+    const res = await fetch(REGISTER_USER, options);
     console.log(res);
     const response = await res.json();
     if (res.status === 200) {
@@ -47,7 +51,7 @@ export const AuthContextProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(creds),
     };
-    const res = await fetch(`${BASE_URL}/api/v1/auth/authenticate`, options);
+    const res = await fetch(LOGIN_USER, options);
     console.log(res);
     const response = await res.json();
     if (res.status === 200) {
