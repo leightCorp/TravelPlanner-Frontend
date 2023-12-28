@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { BASE_URL } from "../constants/env.constants";
+import { COMMON_ERROR, NO_HOTELS } from "../constants/error-constants";
 
 export const HotelContext = createContext({
   hotelDetails: {},
@@ -11,7 +12,6 @@ export function HotelContextProvider(props) {
     const accessToken = JSON.parse(
       localStorage.getItem("authData")
     ).accessToken;
-    console.log(accessToken);
     const options = {
       method: "GET",
       headers: {
@@ -22,7 +22,11 @@ export function HotelContextProvider(props) {
     };
     const res = await fetch(`${BASE_URL}/api/v1/hotel/${email}`, options);
     console.log(res);
+    if (res.status === 404) {
+      return "failed";
+    }
   }
+
   const hotelData = {
     hotelDetails: hotelDetails,
     getHotelDetails: getHotelDetails,
