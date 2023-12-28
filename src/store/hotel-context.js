@@ -26,7 +26,7 @@ export function HotelContextProvider(props) {
       },
     };
     const res = await fetch(GET_HOTEL_DETAILS + email, options);
-    console.log(res);
+    console.log(res.json());
     if (res.status === 404) {
       return "failed";
     }
@@ -47,8 +47,19 @@ export function HotelContextProvider(props) {
       body: JSON.stringify(hotel),
     };
     const res = await fetch(REGISTER_HOTEL, options);
-    console.log(res);
+    const temp = await res.json();
+    const hotelData = {
+      address: temp.address,
+      capacity: temp.capacity,
+      city: temp.city,
+      contact: temp.contact,
+      email: temp.email,
+      name: temp.name,
+    };
+    console.log(hotelData);
     if (res.status === 200) {
+      setHotelDetails(hotelData);
+      console.log(hotelDetails.name);
       return "success";
     }
   }
