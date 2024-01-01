@@ -8,15 +8,16 @@ function HomeModal(props) {
   const cityRef = useRef();
   const addressRef = useRef();
   const contactRef = useRef();
+  const email = JSON.parse(localStorage.getItem("authData")).email;
 
   const [response, setResponse] = useState();
   const context = useContext(HotelContext);
 
   async function handleSubmitt() {
     const hotel = {
-      email: emailRef.current.value,
       city: cityRef.current.value,
       address: addressRef.current.value,
+      email: emailRef.current.value,
       name: nameRef.current.value,
       contact: contactRef.current.value,
     };
@@ -47,10 +48,12 @@ function HomeModal(props) {
           ></input>
           <input
             type="email"
-            placeholder="enter your email"
+            value={email}
             className="mb-2"
             ref={emailRef}
+            readOnly
           ></input>
+
           <input
             type="text"
             placeholder="enter your city"
