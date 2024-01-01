@@ -21,8 +21,12 @@ function HotelNavBar() {
     >
       <Navbar.Brand className="text-white">TravelPlanner</Navbar.Brand>
       <div className="d-flex">
-        <Nav.Link className="text-white m-3">Home</Nav.Link>
-        <Nav.Link className="text-white m-3">Manage</Nav.Link>
+        <Nav.Link className="text-white m-3" href="/hotel">
+          Home
+        </Nav.Link>
+        <Nav.Link className="text-white m-3" href="/hotel/manage">
+          Manage
+        </Nav.Link>
         <Button variant="danger" className="text-white" onClick={logOutHandler}>
           Logout
         </Button>
