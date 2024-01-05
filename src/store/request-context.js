@@ -7,6 +7,7 @@ export const ReservationContext = createContext({
 });
 export function ReservationContextProvider(props) {
   const [reserveHotel, setReserveHotel] = useState([]);
+
   async function searchHotels(searchData) {
     const accessToken = JSON.parse(
       localStorage.getItem("authData")
@@ -17,11 +18,32 @@ export function ReservationContextProvider(props) {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-    const serachUrl = `${SEARCH_HOTELS}?city=${searchData.city}&from=${searchData.from}&to=${searchData.to}`;
-    const res = await fetch(serachUrl, options).then(
-      async (response) => await response.json()
-    );
-    console.log(res);
+    const searchUrl = `${SEARCH_HOTELS}?city=${searchData.city}&from=${searchData.from}&to=${searchData.to}`;
+    try {
+      const response = await fetch(searchUrl, options);
+      if (response.status === 200) {
+        try {
+          const res = await response.json();
+          if (res.length) {
+            setReserveHotel(res);
+            // console.log(reserveHotel);
+            return res.length;
+          }
+        } catch (error) {
+          return length;
+        }
+      } else {
+        return -1;
+      }
+    } catch (error) {
+      return -1;
+    }
+    let length = 0;
+    // console.log("response : ", response);
+
+    // console.log("res : ", res);
+
+    // console.log(length);
   }
 
   const searchhotel = {

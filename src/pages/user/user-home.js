@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardFooter,
   Dropdown,
   Form,
   FormControl,
@@ -11,10 +12,16 @@ import {
 import { CITY_LIST } from "../../constants/env.constants";
 import { useContext, useState } from "react";
 import { ReservationContext } from "../../store/request-context";
+import {
+  COMMON_ERROR,
+  NO_SEARCH_RESULT,
+} from "../../constants/error-constants";
+import { useNavigate } from "react-router";
 
 function UserHome() {
   const context = useContext(ReservationContext);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -24,8 +31,14 @@ function UserHome() {
       to: e.target.to.value,
     };
     const res = await context.searchHotels(searchData);
-    const temp = await res.json();
-    console.log(temp);
+    console.log(res);
+    if (res === 0) {
+      setError(NO_SEARCH_RESULT);
+    } else if (res > 0) {
+      navigate("result");
+    } else {
+      setError(COMMON_ERROR);
+    }
   }
 
   return (
@@ -53,7 +66,6 @@ function UserHome() {
                   <FormControl
                     name="from"
                     type="date"
-                    form-control
                     className=" bg-secondary"
                   ></FormControl>
                 </FormGroup>
@@ -63,7 +75,6 @@ function UserHome() {
                   <FormControl
                     name="to"
                     type="date"
-                    form-control
                     className=" bg-secondary"
                   ></FormControl>
                 </FormGroup>
@@ -73,6 +84,9 @@ function UserHome() {
               </div>
             </Form>
           </CardBody>
+          <CardFooter className="d-flex justify-content-center text-danger">
+            {error && error}
+          </CardFooter>
         </Card>
       </div>
     </>

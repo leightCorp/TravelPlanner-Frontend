@@ -41,21 +41,21 @@ function HomeModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Form className="d-flex flex-column align-items-center">
-          <input
+          <Form.Control
             type="text"
             placeholder="enter your name"
             className="mb-2"
             ref={nameRef}
-          ></input>
-          <input
+          ></Form.Control>
+          <Form.Control
             type="email"
             value={email}
             className="mb-2"
             ref={emailRef}
             readOnly
-          ></input>
+          ></Form.Control>
 
-          <select
+          <Form.Select
             type="text"
             placeholder="enter your city"
             className="mb-2"
@@ -64,19 +64,19 @@ function HomeModal(props) {
             {CITY_LIST.map((city) => {
               return <option>{city}</option>;
             })}
-          </select>
-          <input
+          </Form.Select>
+          <Form.Control
             type="text"
             placeholder="enter your address"
             className="mb-2"
             ref={addressRef}
-          ></input>
-          <input
+          ></Form.Control>
+          <Form.Control
             type="tel"
             placeholder="enter your mob"
             className="mb-2"
             ref={contactRef}
-          ></input>
+          ></Form.Control>
         </Form>
       </Modal.Body>
       <Modal.Footer>
