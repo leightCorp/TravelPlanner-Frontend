@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { HotelContext } from "../../store/hotel-context";
+import { CITY_LIST } from "../../constants/env.constants";
 
 function HomeModal(props) {
   const nameRef = useRef();
@@ -54,12 +55,16 @@ function HomeModal(props) {
             readOnly
           ></input>
 
-          <input
+          <select
             type="text"
             placeholder="enter your city"
             className="mb-2"
             ref={cityRef}
-          ></input>
+          >
+            {CITY_LIST.map((city) => {
+              return <option>{city}</option>;
+            })}
+          </select>
           <input
             type="text"
             placeholder="enter your address"
