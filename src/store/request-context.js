@@ -4,6 +4,7 @@ import { SEARCH_HOTELS } from "../constants/env.constants";
 export const ReservationContext = createContext({
   reserveHotel: [],
   searchHotels: () => {},
+  // bookHotel: () => {},
 });
 export function ReservationContextProvider(props) {
   const [reserveHotel, setReserveHotel] = useState([]);
@@ -39,16 +40,24 @@ export function ReservationContextProvider(props) {
       return -1;
     }
     let length = 0;
-    // console.log("response : ", response);
-
-    // console.log("res : ", res);
-
-    // console.log(length);
   }
+
+  // async function bookHotel(){
+  //   const options={
+  //     method:"POST",
+  //     headers:{
+  //       "Content-Type":"application/json"
+  //     },
+  //     body:JSON.stringify()
+  //   }
+
+  //   const res= await fetch( ,options)
+  // }
 
   const searchhotel = {
     reserveHotel: reserveHotel,
     searchHotels: searchHotels,
+    // bookHotel: bookHotel,
   };
 
   return (
