@@ -12,7 +12,6 @@ function HotelHome() {
   useEffect(async () => {
     const email = JSON.parse(localStorage.getItem("authData")).email;
     const res = await context.getHotelDetails(email);
-    console.log(res);
     if (res === "failed") {
       setModalShow(true);
     }
